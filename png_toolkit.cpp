@@ -32,3 +32,16 @@ image_data png_toolkit::getPixelData( void ) const
 {
     return imgData;
 }
+
+void png_toolkit::Filter_RedHalf() {
+  if (imgData.compPerPixel == STBI_rgb || imgData.compPerPixel == STBI_rgb_alpha) {
+    stbi_uc* pos = &imgData.pixels[imgData.compPerPixel * imgData.w * (imgData.h / 2)];
+
+    for (int y = imgData.h / 2; y < imgData.h; ++y)
+      for (int x = 0; x < imgData.w; ++x)
+        for (int ch = 0; ch < imgData.compPerPixel; ++ch) {
+          *pos = ch ? 0x00 : 0xFF;
+          ++pos;
+        }
+  }
+}
