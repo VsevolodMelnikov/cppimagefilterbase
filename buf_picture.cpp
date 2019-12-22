@@ -65,7 +65,7 @@ int BufPicture::getContractionR(int y, int x, Kernel& ker) const {
       }
     }
 
-    //sum /= ker.sum();
+    sum /= ker.sum();
 
     if (sum < 0x00) {
       sum = 0x00;
@@ -74,7 +74,7 @@ int BufPicture::getContractionR(int y, int x, Kernel& ker) const {
       sum = 0xFF;
     }
 
-    return sum /= ker.sum();
+    return sum;
   }
   else {
     return 0;

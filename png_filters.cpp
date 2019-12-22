@@ -137,21 +137,27 @@ void BlurFilter::apply(image_data& image) {
 
   stbi_uc* buf_pixels = new stbi_uc[image.compPerPixel * (y_end - y_start) * (x_end - x_start)];
   for (int y = y_start; y < y_end; ++y) {
+    int y_pos = image.compPerPixel * (y - y_start) * (x_end - x_start);
     for (int x = x_start; x < x_end; ++x) {
-      buf_pixels[image.compPerPixel * (y - y_start) * (x_end - x_start) + image.compPerPixel * (x - x_start)] = bp.getContractionR(y, x, ker);
-      buf_pixels[image.compPerPixel * (y - y_start) * (x_end - x_start) + image.compPerPixel * (x - x_start) + 1] = bp.getContractionG(y, x, ker);
-      buf_pixels[image.compPerPixel * (y - y_start) * (x_end - x_start) + image.compPerPixel * (x - x_start) + 2] = bp.getContractionB(y, x, ker);
+      int x_pos = image.compPerPixel * (x - x_start);
+
+      buf_pixels[y_pos + x_pos] = bp.getContractionR(y, x, ker);
+      buf_pixels[y_pos + x_pos + 1] = bp.getContractionG(y, x, ker);
+      buf_pixels[y_pos + x_pos + 2] = bp.getContractionB(y, x, ker);
     }
   }
 
   for (int y = y_start; y < y_end; ++y) {
+    int y_pos = image.compPerPixel * (y - y_start) * (x_end - x_start);
     for (int x = x_start; x < x_end; ++x) {
+      int x_pos = image.compPerPixel * (x - x_start);
+
       image.pixels[image.compPerPixel * image.w * y + image.compPerPixel * x] =
-        buf_pixels[image.compPerPixel * (y - y_start) * (x_end - x_start) + image.compPerPixel * (x - x_start)];
+        buf_pixels[y_pos + x_pos];
       image.pixels[image.compPerPixel * image.w * y + image.compPerPixel * x + 1] =
-        buf_pixels[image.compPerPixel * (y - y_start) * (x_end - x_start) + image.compPerPixel * (x - x_start) + 1];
+        buf_pixels[y_pos + x_pos + 1];
       image.pixels[image.compPerPixel * image.w * y + image.compPerPixel * x + 2] =
-        buf_pixels[image.compPerPixel * (y - y_start) * (x_end - x_start) + image.compPerPixel * (x - x_start) + 2];
+        buf_pixels[y_pos + x_pos + 2];
     }
   }
 

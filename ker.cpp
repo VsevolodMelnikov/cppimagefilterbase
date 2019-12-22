@@ -11,7 +11,7 @@ Kernel::Kernel(int size)
   }
   else {
     weight = nullptr;
-    size = 0;
+    this->size = 0;
   }
 }
 int Kernel::getSize() {
@@ -30,8 +30,8 @@ Kernel::~Kernel() {
   if (size > 0) {
     for (int i = 0; i < size; ++i)
       delete[] weight[i];
+    delete[] weight;
   }
-  delete[] weight;
 }
 
 EdgeKernel::EdgeKernel()

@@ -12,7 +12,7 @@ Manager::Manager(char* arg1, char* arg2, char* arg3)
   int u, l, d, r;
   string filtname;
 
-  /*try {
+  try {
     while (f >> filtname) {
       f >> u;
       f >> l;
@@ -33,8 +33,8 @@ Manager::Manager(char* arg1, char* arg2, char* arg3)
       }
     }
   }
-  catch (...) {}*/
-  while (!f.eof()) {
+  catch (...) {}
+  /*while (!f.eof()) {
     try {
       f >> filtname;
       f >> u;
@@ -58,7 +58,7 @@ Manager::Manager(char* arg1, char* arg2, char* arg3)
     catch (...) {
       break;
     }
-  }
+  }*/
   f.close();
 }
 void Manager::run() {
