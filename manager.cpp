@@ -9,7 +9,6 @@ Manager::Manager(char* arg1, char* arg2, char* arg3)
   :filename_in(arg2), filename_out(arg3)
 {
   ifstream f(arg1);
-  int u, l, d, r;
 
   /*try {
     while (f >> filtname) {
@@ -35,6 +34,8 @@ Manager::Manager(char* arg1, char* arg2, char* arg3)
   catch (...) {}*/
   while (!f.eof()) {
     string filtname;
+    int u, l, d, r;
+
     try {
       f >> filtname;
       f >> u;
