@@ -34,7 +34,7 @@ Manager::Manager(char* arg1, char* arg2, char* arg3)
     }
   }
   catch (...) {}*/
-  while (f.eof()) {
+  while (!f.eof()) {
     try {
       f >> filtname;
       f >> u;
