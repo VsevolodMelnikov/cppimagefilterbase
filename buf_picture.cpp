@@ -38,7 +38,6 @@ int BufPicture::getIntensity(int y, int x) const {
   return (int)((3 * getR(y, x) + 6 * getG(y, x) + getB(y, x)) / 10);
 }
 int BufPicture::getMedianIntensity(int y, int x, int radius) const {
-  int sum = 0;
   std::vector<int> medians;
 
   for (int x_iter = x - radius; x_iter < x + 1 + radius; ++x_iter) {
@@ -67,7 +66,15 @@ int BufPicture::getContractionR(int y, int x, Kernel& ker) const {
     }
 
     sum /= ker.sum();
-    return (((sum > 255) ? 255 : sum) < 0) ? 0 : ((sum > 255) ? 255 : sum);
+
+    if (sum < 0x00) {
+      sum = 0x00;
+    }
+    else if (sum > 0xFF) {
+      sum = 0xFF;
+    }
+
+    return sum;
   }
   else {
     return 0;
@@ -85,9 +92,17 @@ int BufPicture::getContractionG(int y, int x, Kernel& ker) const {
         }
       }
     }
-
+    
     sum /= ker.sum();
-    return (((sum > 255) ? 255 : sum) < 0) ? 0 : ((sum > 255) ? 255 : sum);
+
+    if (sum < 0x00) {
+      sum = 0x00;
+    }
+    else if (sum > 0xFF) {
+      sum = 0xFF;
+    }
+
+    return sum;
   }
   else {
     return 0;
@@ -104,10 +119,17 @@ int BufPicture::getContractionB(int y, int x, Kernel& ker) const {
           sum += getB(y_iter, x_iter) * ker.get(y_iter - y + radius, x_iter - x + radius);
         }
       }
+    }    
+    sum /= ker.sum();
+
+    if (sum < 0x00) {
+      sum = 0x00;
+    }
+    else if (sum > 0xFF) {
+      sum = 0xFF;
     }
 
-    sum /= ker.sum();
-    return (((sum > 255) ? 255 : sum) < 0) ? 0 : ((sum > 255) ? 255 : sum);
+    return sum;
   }
   else {
     return 0;
