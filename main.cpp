@@ -1,26 +1,12 @@
-#include <iostream>
-#include "png_toolkit.h"
+#include "manager.h"
 
 int main( int argc, char *argv[] )
 {
-    // toolkit filter_name base_pic_name sudent_tool student_pic_name limitPix limitMSE
-    // toolkit near test images!
-    try
-    {
-        if (argc != 3)
-            throw "Not enough arguments";
+  char* arg1 = "C:\\Users\\edwar\\source\\repos\\VsevolodMelnikov\\cppimagefilterbase\\files\\config.txt";
+  char* arg2 = "C:\\Users\\edwar\\source\\repos\\VsevolodMelnikov\\cppimagefilterbase\\files\\in.jpg";
+  char* arg3 = "C:\\Users\\edwar\\source\\repos\\VsevolodMelnikov\\cppimagefilterbase\\files\\out.jpg";
+  Manager man(arg1, arg2, arg3);
+  man.run();
 
-        png_toolkit studTool;
-        studTool.load(argv[1]);
-        studTool.Filter_RedHalf();
-        studTool.save(argv[2]);
-
-    }
-    catch (const char *str)
-    {
-        std::cout << "Error: " << str << std::endl;
-        return 1;
-    }
-
-    return 0;
+  return 0;
 }
