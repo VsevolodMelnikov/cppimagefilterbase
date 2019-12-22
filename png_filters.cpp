@@ -92,7 +92,7 @@ void ThresholdFilter::apply(image_data& image) {
   stbi_uc* buf_pixels = new stbi_uc[image.compPerPixel * (y_end - y_start) * (x_end - x_start)];
   for (int y = y_start; y < y_end; ++y) {
     for (int x = x_start; x < x_end; ++x) {
-      if (bp.getIntensity(y, x) < bp.getIntensity(y, x, 2)) {
+      if (bp.getIntensity(y, x) < bp.getMedianIntensity(y, x, 2)) {
         buf_pixels[image.compPerPixel * (y - y_start) * (x_end - x_start) + image.compPerPixel * (x - x_start)] = 0x00;
         buf_pixels[image.compPerPixel * (y - y_start) * (x_end - x_start) + image.compPerPixel * (x - x_start) + 1] = 0x00;
         buf_pixels[image.compPerPixel * (y - y_start) * (x_end - x_start) + image.compPerPixel * (x - x_start) + 2] = 0x00;

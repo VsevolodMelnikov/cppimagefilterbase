@@ -13,7 +13,7 @@ public:
   int getG(int y, int x) const;
   int getB(int y, int x) const;
   int getIntensity(int y, int x) const;
-  int getIntensity(int y, int x, int radius) const;
+  int getMedianIntensity(int y, int x, int radius) const;
   int getContractionR(int y, int x, Kernel& ker) const;
   int getContractionG(int y, int x, Kernel& ker) const;
   int getContractionB(int y, int x, Kernel& ker) const;

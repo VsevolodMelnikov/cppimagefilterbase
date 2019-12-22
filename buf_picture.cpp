@@ -1,5 +1,6 @@
 #include "buf_picture.h"
 #include "png_filters.h"
+#include <vector>
 #include <algorithm>
 
 BufPicture::BufPicture(ImageBorders& bords, image_data& image)
@@ -36,23 +37,21 @@ int BufPicture::getB(int y, int x) const {
 int BufPicture::getIntensity(int y, int x) const {
   return (int)((3 * getR(y, x) + 6 * getG(y, x) + getB(y, x)) / 10);
 }
-int BufPicture::getIntensity(int y, int x, int radius) const {
-  int points_number = 0;
+int BufPicture::getMedianIntensity(int y, int x, int radius) const {
   int sum = 0;
+  std::vector<int> medians;
 
   for (int x_iter = x - radius; x_iter < x + 1 + radius; ++x_iter) {
     for (int y_iter = y - radius; y_iter < y + 1 + radius; ++y_iter) {
       if (isInPicture(y_iter, x_iter)) {
-        sum += getIntensity(y_iter, x_iter);
-        points_number++;
+        medians.push_back(getIntensity(y_iter, x_iter));
       }
     }
   }
 
-  if (points_number != 0)
-    return (int)(sum / points_number);
-  else
-    return 0;
+  std::sort(medians.begin(), medians.end());
+
+  return medians[medians.size() / 2];
 }
 int BufPicture::getContractionR(int y, int x, Kernel& ker) const {
   if (ker.getSize() % 2) {
