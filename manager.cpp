@@ -39,10 +39,10 @@ void Manager::run() {
   png_toolkit studTool;
 
   studTool.load(filename_in);
-  for (Filter* filt : filters) {
+  /*for (Filter* filt : filters) {
     image_data data = studTool.getPixelData();
     filt->apply(data);
-  }
+  }*/
   studTool.save(filename_out);
 }
 Manager::~Manager() {
